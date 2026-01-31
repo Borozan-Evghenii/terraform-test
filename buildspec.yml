@@ -1,0 +1,51 @@
+version: 0.2
+
+env:
+  variables:
+    TF_VERSION: "1.7.0"
+    TF_IN_AUTOMATION: "true"
+  parameter-store:
+    # Store these in AWS Systems Manager Parameter Store
+    # AWS_ACCESS_KEY_ID: "/terraform/aws_access_key_id"
+    # AWS_SECRET_ACCESS_KEY: "/terraform/aws_secret_access_key"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo "Installing Terraform ${TF_VERSION}..."
+      - curl -sLo terraform.zip "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
+      - unzip -o terraform.zip -d /usr/local/bin/
+      - terraform --version
+
+  pre_build:
+    commands:
+      - echo "Initializing Terraform..."
+      - terraform init -input=false
+      - echo "Validating Terraform configuration..."
+      - terraform validate
+      - echo "Checking format..."
+      - terraform fmt -check -recursive || true
+
+  build:
+    commands:
+      - echo "Planning Terraform changes..."
+      - terraform plan -input=false -out=tfplan
+      - echo "Applying Terraform changes..."
+      - terraform apply -input=false -auto-approve tfplan
+
+  post_build:
+    commands:
+      - echo "Terraform apply completed"
+      - terraform output -json > terraform_outputs.json
+
+artifacts:
+  files:
+    - terraform_outputs.json
+    - tfplan
+  discard-paths: yes
+
+cache:
+  paths:
+    - '.terraform/**/*'
