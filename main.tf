@@ -4,7 +4,7 @@ terraform {
   backend "s3" {
     bucket  = "ff-ai-assistant-terraform-state"
     key     = "infrastructure/terraform.tfstate"
-    region  = "us-east-1"
+    region  = "eu-central-1"
     encrypt = true
   }
 

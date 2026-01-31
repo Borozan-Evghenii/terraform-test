@@ -14,7 +14,7 @@ variable "environment" {
 variable "aws_region" {
   description = "AWS region"
   type        = string
-  default     = "us-east-1"
+  default     = "eu-central-1"
 }
 
 # VPC
@@ -27,7 +27,7 @@ variable "vpc_cidr" {
 variable "availability_zones" {
   description = "Availability zones"
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
+  default     = ["eu-central-1a", "eu-central-1b"]
 }
 
 # EC2
@@ -40,7 +40,7 @@ variable "ec2_instance_type" {
 variable "ec2_ami" {
   description = "AMI ID for EC2 instance"
   type        = string
-  default     = "ami-0c02fb55956c7d316" # Amazon Linux 2023 us-east-1
+  default     = "ami-0c02fb55956c7d316" # Amazon Linux 2023 eu-central-1
 }
 
 variable "ec2_volume_size" {
