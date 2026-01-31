@@ -4,10 +4,10 @@ env:
   variables:
     TF_VERSION: "1.7.0"
     TF_IN_AUTOMATION: "true"
-  parameter-store:
-    # Store these in AWS Systems Manager Parameter Store
-    # AWS_ACCESS_KEY_ID: "/terraform/aws_access_key_id"
-    # AWS_SECRET_ACCESS_KEY: "/terraform/aws_secret_access_key"
+  # Uncomment and configure if using Parameter Store for credentials:
+  # parameter-store:
+  #   AWS_ACCESS_KEY_ID: "/terraform/aws_access_key_id"
+  #   AWS_SECRET_ACCESS_KEY: "/terraform/aws_secret_access_key"
 
 phases:
   install:
