@@ -30,19 +30,17 @@ phases:
 
   build:
     commands:
-      - echo "Planning Terraform changes..."
-      - terraform plan -input=false -out=tfplan
-      - echo "Applying Terraform changes..."
+      - echo "Planning Terraform destroy..."
+      - terraform plan -destroy -input=false -out=tfplan
+      - echo "Destroying Terraform infrastructure..."
       - terraform apply -input=false -auto-approve tfplan
 
   post_build:
     commands:
-      - echo "Terraform apply completed"
-      - terraform output -json > terraform_outputs.json
+      - echo "Terraform destroy completed"
 
 artifacts:
   files:
-    - terraform_outputs.json
     - tfplan
   discard-paths: yes
 
